@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+{% load static %}
+
+{% if students_list %}
+<ul>
+    <p>{{ students_list.count }}</p>
+    {% for student in students_list %}
+    <li>{{ student.full_name }} {{ student.exam_sum }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>There are no students in database.</p>
+{% endif %}
+</body>
+</html>

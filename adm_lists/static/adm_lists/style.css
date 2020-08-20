@@ -1,0 +1,9 @@
+p {
+    color: red;
+    font-size: 40pt;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}

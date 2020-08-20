@@ -5,15 +5,31 @@
     <title>Index</title>
 </head>
 <body>
+
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'adm_lists/style.css' %}">
 
 {% if students_list %}
-<ul>
-    <p>{{ students_list.count }}</p>
+<p align="center"> Общее кол-во поступающих в СПбГУ – {{ students_list.count}} человек </p>
+<table>
+    <tr>
+        <td> Full_name </td>
+        <td> Sum </td>
+        <td> Faculty </td>
+        <td> Direction </td>
+        <td> Program </td>
+    </tr>
     {% for student in students_list %}
-    <li>{{ student.full_name }} {{ student.exam_sum }}</li>
+    <tr>
+        <td>{{ student.full_name }}</td>
+        <td>{{ student.exam_sum }}</td>
+        <td>{{student.faculty}}</td>
+        <td>{{student.direction}}</td>
+        <td>{{student.program}}</td>
+    </tr>
     {% endfor %}
-</ul>
+</table>
+
 {% else %}
 <p>There are no students in database.</p>
 {% endif %}

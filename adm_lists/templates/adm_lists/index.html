@@ -10,16 +10,16 @@
 <link rel="stylesheet" type="text/css" href="{% static 'adm_lists/style.css' %}">
 
 {% if data %}
-<p align="center"> Общее кол-во поступающих в СПбГУ – {{ data|length }} человек </p>
+<p align="center"> Общее заявлений в СПбГУ – {{ data|length }} человек </p>
 <table>
     <tr>
         {% for heading in headings %}
         <td>{{ heading }}</td>
         {% endfor %}
     </tr>
-    {% for student in data %}
+    {% for row in data %}
     <tr>
-        {% for elem in student %}
+        {% for elem in row %}
         <td>{{ elem }}</td>
         {% endfor %}
     </tr>

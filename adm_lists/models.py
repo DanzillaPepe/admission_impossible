@@ -9,8 +9,6 @@ from django.db import models
 
 
 class Admission(models.Model):
-    # id = models.AutoField()
-    number = None
     scrape_date = models.DateTimeField(blank=True, null=True)
     url = models.CharField(max_length=50, blank=True, null=True)
     updated = models.DateTimeField(blank=True, null=True)
@@ -44,3 +42,22 @@ class Admission(models.Model):
     class Meta:
         managed = False
         db_table = 'admission'
+
+
+class Student(models.Model):
+    full_name = models.CharField(max_length=50, blank=True, null=True)
+    birthday = models.DateField(blank=True, null=True)
+    total = models.IntegerField(blank=True, null=True)
+    exam_sum = models.IntegerField(blank=True, null=True)
+    exam_1 = models.IntegerField(blank=True, null=True)
+    exam_2 = models.IntegerField(blank=True, null=True)
+    exam_3 = models.IntegerField(blank=True, null=True)
+    bonus_sum = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'admission'
+
+
+class Direction(models.Model):
+    direction = models.CharField(max_length=50, blank=True, null=True)

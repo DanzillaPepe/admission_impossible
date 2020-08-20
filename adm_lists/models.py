@@ -10,6 +10,7 @@ from django.db import models
 
 class Admission(models.Model):
     # id = models.AutoField()
+    number = None
     scrape_date = models.DateTimeField(blank=True, null=True)
     url = models.CharField(max_length=50, blank=True, null=True)
     updated = models.DateTimeField(blank=True, null=True)

@@ -9,23 +9,19 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'adm_lists/style.css' %}">
 
-{% if students_list %}
-<p align="center"> Общее кол-во поступающих в СПбГУ – {{ students_list.count}} человек </p>
+{% if data %}
+<p align="center"> Общее кол-во поступающих в СПбГУ – {{ data|length }} человек </p>
 <table>
     <tr>
-        <td> Full_name </td>
-        <td> Sum </td>
-        <td> Faculty </td>
-        <td> Direction </td>
-        <td> Program </td>
+        {% for heading in headings %}
+        <td>{{ heading }}</td>
+        {% endfor %}
     </tr>
-    {% for student in students_list %}
+    {% for student in data %}
     <tr>
-        <td>{{ student.full_name }}</td>
-        <td>{{ student.exam_sum }}</td>
-        <td>{{student.faculty}}</td>
-        <td>{{student.direction}}</td>
-        <td>{{student.program}}</td>
+        {% for elem in student %}
+        <td>{{ elem }}</td>
+        {% endfor %}
     </tr>
     {% endfor %}
 </table>

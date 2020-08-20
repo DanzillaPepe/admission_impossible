@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.template import loader
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
@@ -6,17 +7,43 @@ from django.utils import timezone
 
 from .models import Admission
 
+ELEMENTS = ['number',
+            'full_name',
+            'birthday',
+            'exam_sum',
+            'exam_1',
+            'exam_2',
+            'exam_3',
+            'priority',
 
-class IndexView(generic.ListView):
-    template_name = 'adm_lists/index.html'
-    context_object_name = 'students_list'
+            ]
+HEADINGS = ['№',
+            'Имя',
+            'День прждения',
+            'Сумма ЕГЭ',
+            'Экзамен 1',
+            'Экзамен 2',
+            'Экзамен 3',
+            'Приоритет']
 
-    def get_queryset(self):
-        """
-        Return the last five published questions (not including those set to be
-        published in the future).
-        """
-        students = Admission.objects.all().order_by("-exam_sum")
-        return students
+def IndexView(request):
+    n = Admission.objects.count()
+    students = Admission.objects.order_by('-exam_sum')
+    i = 1
+    for student in students:
+        student.number = i
+        i += 1
+    students_list = list(students)
+    final_list = list()
+    for student in students_list:
+        to_add = list()
+        for element in ELEMENTS:
+            to_add.append(getattr(student, element))
+        final_list.append(to_add)
+    a = 0
+    context = {
+        'headings': HEADINGS,
+        'data': final_list,
+    }
 
-
+    return render(request, 'adm_lists/index.html', context)

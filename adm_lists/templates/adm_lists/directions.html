@@ -10,15 +10,24 @@
 <link rel="stylesheet" type="text/css" href="{% static 'adm_lists/style.css' %}">
 
 {% if dir_list %}
-<p align="center"> Направления </p>
-<table>
+
+<div class="subtitle">
+    <p2> Направления</p2>
+</div>
+<table class="list">
+    <tr>
+        {% for heading in headings %}
+        <td>{{ heading }}</td>
+        {% endfor %}
+    </tr>
     {% for dir in dir_list %}
     <tr>
-        <td>{{ dir }}</td>
+        {% for elem in dir %}
+        <td>{{ elem }}</td>
+        {% endfor %}
     </tr>
     {% endfor %}
 </table>
-
 {% else %}
 <p>There are no directions in database.</p>
 {% endif %}

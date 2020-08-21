@@ -5,47 +5,49 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.utils import timezone
 
-from .models import Admission, Student
+from .models import Admission, Student, Direction
+from adm_lists.headings import HEADINGS, IndexColumns, StudentColumns, DirectionColumns
+
+
+def get_headings(columns):
+    headings = list()
+    for column in columns:
+        headings.append(HEADINGS[column])
+    return headings
+
+
+def get_list(columns, data, numeration=False):
+    if numeration:
+        columns = ['number'] + columns
+        i = 1
+        for row in data:
+            row.number = i
+            i += 1
+    data_list = list(data)
+    final_list = list()
+    for row in data_list:
+        to_add = list()
+        for column in columns:
+            if column == "students":
+                students_list = str()
+                for student in getattr(row, column).all():
+                    students_list += str(student)
+                to_add.append(students_list)
+                continue
+            to_add.append(getattr(row, column))
+        final_list.append(to_add)
+
+    return final_list, columns
 
 
 def IndexView(request):
-    columns = ['number',
-               'id',
-               'full_name',
-               'birthday',
-               'total',
-               'exam_sum',
-               'exam_1',
-               'exam_2',
-               'exam_3',
-               'bonus_sum',
-               ]
-    headings = ['№',
-                'ID',
-                'Имя',
-                'День рождения',
-                'Общая сумма',
-                'Сумма ЕГЭ',
-                'Экзамен 1',
-                'Экзамен 2',
-                'Экзамен 3',
-                'Доп. баллы',
-                ]
-    n = Student.objects.count()
-    students = Student.objects.order_by('full_name')
-    i = 1
-    for student in students:
-        student.number = i
-        i += 1
-    students_list = list(students)
-    final_list = list()
-    for student in students_list:
-        to_add = list()
-        for element in columns:
-            to_add.append(getattr(student, element))
-        final_list.append(to_add)
+    columns = IndexColumns.columns
+    data = Admission.objects.order_by('full_name')
+
+    final_list, columns = get_list(columns, data, numeration=True)
+
     context = {
-        'headings': headings,
+        'headings': get_headings(columns),
         'data': final_list,
     }
 
@@ -53,9 +55,28 @@ def IndexView(request):
 
 
 def DirectionsView(request):
-    dir_list = Admission.objects.values_list('direction')
+    columns = DirectionColumns.columns
+    dir_list = Direction.objects.all()
+
+    final_list, columns = get_list(columns, dir_list, numeration=True)
+
     context = {
-        'dir_list': dir_list,
+        'headings': get_headings(columns),
+        'dir_list': final_list,
     }
 
     return render(request, 'adm_lists/directions.html', context)
+
+
+def StudentsView(request):
+    columns = StudentColumns.columns
+    stud_list = Student.objects.all()
+
+    final_list, columns = get_list(columns, stud_list, numeration=True)
+
+    context = {
+        'headings': get_headings(columns),
+        'stud_list': final_list,
+    }
+
+    return render(request, 'adm_lists/students.html', context)

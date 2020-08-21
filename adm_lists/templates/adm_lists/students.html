@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+</head>
+<body>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'adm_lists/style.css' %}">
+
+{% if stud_list %}
+
+<div class="subtitle">
+    <p> Поступающие </p>
+</div>
+<table class="list">
+    <tr>
+        {% for heading in headings %}
+        <td>{{ heading }}</td>
+        {% endfor %}
+    </tr>
+    {% for student in stud_list %}
+    <tr>
+        {% for elem in student %}
+        <td>{{ elem }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% else %}
+<p>There are no students in database.</p>
+{% endif %}
+</body>
+</html>

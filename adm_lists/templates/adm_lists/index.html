@@ -10,8 +10,22 @@
 <link rel="stylesheet" type="text/css" href="{% static 'adm_lists/style.css' %}">
 
 {% if data %}
-<p align="center"> Общее заявлений в СПбГУ – {{ data|length }} человек </p>
-<table>
+<div class="title">
+    <p> ЗАЯВЛЕНИЯ О ПОСТУПЛЕНИИ В СПбГУ </p>
+    <p> Всего {{ data|length }} завялений </p>
+</div>
+<table class="subtitle">
+    <tr>
+        <td class="subtitle">
+            <p2><a href="{% url 'adm_lists:students'%}"> Список подавших заявление </a></p2>
+        </td>
+        <td class="subtitle">
+            <p2><a href="{% url 'adm_lists:directions'%}"> Список направлений </a></p2>
+        </td>
+    </tr>
+</table>
+<br><br><br>
+<table class="list">
     <tr>
         {% for heading in headings %}
         <td>{{ heading }}</td>
@@ -27,7 +41,7 @@
 </table>
 
 {% else %}
-<p>There are no students in database.</p>
+<p>There are no admissions in database.</p>
 {% endif %}
 </body>
 </html>

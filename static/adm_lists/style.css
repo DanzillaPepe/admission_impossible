@@ -1,0 +1,12 @@
+p {
+    color: red;
+    font-size: 20pt;
+}
+
+table, th, td {
+  border: 10px solid black;
+  border-collapse: collapse;
+  align: center;
+  text-align:"center";
+  class="center";
+}

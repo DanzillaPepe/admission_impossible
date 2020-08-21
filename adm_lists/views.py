@@ -31,7 +31,7 @@ def get_list(columns, data, numeration=False):
             if column == "students":
                 students_list = str()
                 for student in getattr(row, column).all():
-                    students_list += str(student)
+                    students_list += str(student) + "; "
                 to_add.append(students_list)
                 continue
             to_add.append(getattr(row, column))

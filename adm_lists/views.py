@@ -28,7 +28,7 @@ def get_list(columns, data, numeration=False):
     for row in data_list:
         to_add = list()
         for column in columns:
-            if column == "students":
+            if column in ["students", "direction_set"]:
                 students_list = str()
                 for student in getattr(row, column).all():
                     students_list += str(student) + "; "
@@ -42,7 +42,7 @@ def get_list(columns, data, numeration=False):
 
 def IndexView(request):
     columns = IndexColumns.columns
-    data = Admission.objects.order_by('full_name')
+    data = Admission.objects.order_by('student.name')
 
     final_list, columns = get_list(columns, data, numeration=True)
 

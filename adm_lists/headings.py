@@ -1,5 +1,5 @@
 id = 'id'
-full_name = 'full_name'
+full_name = 'student.name'
 name = 'name'
 birthday = 'birthday'
 total = 'total'
@@ -10,6 +10,7 @@ exam_3 = 'exam_3'
 bonus_sum = 'bonus_sum'
 title = 'title'
 students = 'students'
+directions = 'direction_set'
 
 HEADINGS = {
     'number': '№',
@@ -24,7 +25,8 @@ HEADINGS = {
     'exam_3': '3 экзамен',
     'bonus_sum': 'Доп. баллы',
     'title': 'Название',
-    'students': "Подавшие заявление"
+    'students': 'Подавшие заявление',
+    'direction_set': 'Направления',
 }
 
 
@@ -33,7 +35,7 @@ class IndexColumns:
 
 
 class StudentColumns:
-    columns = [id, name, birthday]
+    columns = [id, name, birthday, directions]
 
 
 class DirectionColumns:

@@ -10,17 +10,17 @@
 <link rel="stylesheet" type="text/css" href="{% static 'adm_lists/style.css' %}">
 
 {% if data %}
-<div class="title">
+<div class="title1">
     <p> ЗАЯВЛЕНИЯ О ПОСТУПЛЕНИИ В СПбГУ </p>
     <p> Всего {{ data|length }} завялений </p>
 </div>
 <table class="subtitle">
     <tr>
         <td class="subtitle">
-            <p2><a href="{% url 'adm_lists:students'%}"> Список подавших заявление </a></p2>
+            <p><a href="{% url 'adm_lists:students'%}"> Список абитуриентов </a></p>
         </td>
         <td class="subtitle">
-            <p2><a href="{% url 'adm_lists:directions'%}"> Список направлений </a></p2>
+            <p><a href="{% url 'adm_lists:directions'%}"> Список направлений </a></p>
         </td>
     </tr>
 </table>

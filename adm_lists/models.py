@@ -10,51 +10,19 @@ from django.utils import timezone
 from datetime import datetime
 
 
-class Admission(models.Model):
-    scrape_date = models.DateTimeField()
-    url = models.CharField(max_length=50)
-    updated = models.DateTimeField()
-    university = models.CharField(max_length=50)
-    level = models.CharField(max_length=50)
-    faculty = models.CharField(max_length=50)
-    direction = models.CharField(max_length=50)
-    program = models.CharField(max_length=50)
-    type = models.CharField(max_length=50)
-    contract = models.CharField(max_length=50)
-    places = models.IntegerField()
-    spec_places = models.IntegerField()
-    target_places = models.IntegerField()
-    appl_count = models.IntegerField()
-    row_id = models.IntegerField()
-    reg_num = models.CharField(max_length=50)
-    full_name = models.CharField(max_length=50)
-    birthday = models.DateField()
-    contract_type = models.CharField(max_length=50)
-    priority = models.CharField(max_length=50)
-    total = models.IntegerField()
-    exam_sum = models.IntegerField()
-    exam_1 = models.IntegerField()
-    exam_2 = models.IntegerField()
-    exam_3 = models.IntegerField()
-    bonus_sum = models.IntegerField()
-    agreement = models.IntegerField()
-    bonus_str = models.CharField(max_length=50)
-    comment = models.CharField(max_length=50)
-
-    class Meta:
-        managed = False
-        db_table = 'admission'
-
-
 class Exam(models.Model):
-    subject_name = models.CharField(max_length=50, default='')
-    average = models.IntegerField(default=0)
+    subject = models.CharField(max_length=50, default='')
+
+
+class Score(models.Model):
+    subject = models.ForeignKey(Exam, default=0, on_delete=models.CASCADE)
+    result = models.IntegerField(default=0)
 
 
 class Student(models.Model):
     name = models.CharField(max_length=50, default='')
     birthday = models.DateTimeField(default=timezone.now())
-    exams = models.ManyToManyField(Exam)
+    scores = models.ManyToManyField(Score)
 
     def __str__(self):
         return self.name
@@ -73,3 +41,42 @@ class Direction(models.Model):
 
     class Meta:
         ordering = ['title']
+
+
+class Admission(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+
+    university = models.CharField(max_length=50)
+    level = models.CharField(max_length=50)
+    faculty = models.CharField(max_length=50)
+    direction = models.ForeignKey(Direction, models.CASCADE)
+    program = models.CharField(max_length=50)
+    type = models.CharField(max_length=50)
+    priority = models.CharField(max_length=50)
+    agreement = models.IntegerField()
+    comment = models.CharField(max_length=50)
+
+    total = models.IntegerField()
+    exam_sum = models.IntegerField()
+    exam_1 = models.IntegerField()
+    exam_2 = models.IntegerField()
+    exam_3 = models.IntegerField()
+    bonus_sum = models.IntegerField()
+    bonus_str = models.CharField(max_length=50)
+
+    scrape_date = models.DateTimeField()
+    url = models.CharField(max_length=50)
+    updated = models.DateTimeField()
+
+    contract = models.CharField(max_length=50)
+    places = models.IntegerField()
+    spec_places = models.IntegerField()
+    target_places = models.IntegerField()
+    appl_count = models.IntegerField()
+    row_id = models.IntegerField()
+    reg_num = models.CharField(max_length=50)
+    contract_type = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'admission'

@@ -1,20 +1,18 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 from django.utils import timezone
+import uuid
 from datetime import datetime
 
 
 class Subject(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,
+                          help_text="Unique ID for Subject")
     name = models.CharField(max_length=50, default='')
 
 
 class Student(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,
+                          help_text="Unique ID for Student")
     name = models.CharField(max_length=50, default='')
     birthday = models.DateTimeField(default=timezone.now())
 
@@ -26,29 +24,36 @@ class Student(models.Model):
 
 
 class Score(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,
+                          help_text="Unique ID for Score")
     subject = models.ForeignKey(Subject, default=0, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     result = models.IntegerField(default=0)
 
 
 class University(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,
+                          help_text="Unique ID for University")
     title = models.CharField(max_length=50, default='')
 
 
 class Faculty(models.Model):
-    faculty_id = models.CharField(max_length=50, default='')
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,
+                          help_text="Unique ID for Faculty")
     title = models.CharField(max_length=50, default='')
     university = models.ForeignKey(University, on_delete=models.CASCADE)
 
 
 class Direction(models.Model):
-    direction_id = models.CharField(max_length=50, default='')
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,
+                          help_text="Unique ID for Direction")
     title = models.CharField(max_length=50, default='')
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
 
 
 class Program(models.Model):
-    program_id = models.CharField(max_length=50, default='')
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,
+                          help_text="Unique ID for Program")
     title = models.CharField(max_length=50, default='')
     direction = models.ForeignKey(Direction, on_delete=models.CASCADE)
     students = models.ManyToManyField(Student)
@@ -66,6 +71,9 @@ class Program(models.Model):
 
 
 class Admission(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False,
+                          help_text="Unique ID for Admission")
+
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
 
     # CHARACTERISTICS
@@ -102,5 +110,7 @@ class Admission(models.Model):
     updated = models.DateTimeField()
 
     class Meta:
-        managed = False
-        db_table = 'admission'
+        # managed = False
+
+        verbose_name = 'admission'
+        verbose_name_plural = 'admissions'
